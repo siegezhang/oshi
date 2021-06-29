@@ -1,0 +1,32 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /oshi
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: oshi-service
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+  redis:
+    database: 0
+    port: 6379
+    host: 192.168.3.86
+    password:
+logging:
+  config: classpath:logback.xml
+  level:
+    org.springframework.boot.autoconfigure: error
+generic:
+  include:
+    class: false
+name:
+    serviceName: APP服务器
+    serviceNameEn: APP
+    needWebsocket: true
+    timer: 0/3 * * * * ?
+    serviceNameList:
+                    - CDR
+                    - ETL
+                    - ODS

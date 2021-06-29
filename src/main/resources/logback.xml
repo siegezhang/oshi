@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<configuration scan="true">
+    <contextName>wangtq-AppName</contextName>
+    <property name="APP_NAME" value="oshi"/>
+    <property name="LOG_HOME" value="/opt/logs"/>
+    <timestamp key="bySecond" datePattern="yyyyMMdd'T'HHmmss"/>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                %d{HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n
+            </pattern>
+            <immediateFlush>true</immediateFlush>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    <!-- controller -->
+    <appender name="sysControllerRolling"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/${APP_NAME}/controller/${APP_NAME}-controller.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/${APP_NAME}/controller/${APP_NAME}-%d{yyyy-MM-dd}.%i.zip
+            </fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <TimeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <MaxFileSize>50MB</MaxFileSize>
+            </TimeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n
+            </pattern>
+            <immediateFlush>true</immediateFlush>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!--<logger name="sys.error" level="ERROR">
+        <appender-ref ref="sysErrorRolling" />
+    </logger>-->
+    <logger name="sys.controller" level="INFO">
+        <!--
+                <appender-ref ref="sysControllerRolling" />
+        -->
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    <!-- 日志级别 -->
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="sysControllerRolling"/>
+    </root>
+</configuration>
